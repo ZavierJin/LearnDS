@@ -15,6 +15,7 @@ void check( int X, int Y );
 void check_all();
 void show_output();
 void init_union();
+int find_root( int X );
 
 int main(void)
 {
@@ -26,14 +27,16 @@ int main(void)
     Computers[0] = N;
 
     init_union();
-    while( scanf("%c", &op)==1 && op!='S'){
-        scanf("%d %d\n", &x, &y);
+    do{
+        scanf("%c", &op);
+        if(op!='S') scanf("%d %d\n", &x, &y);
         switch(op){
             case 'C': check(x, y); break;
             case 'I': insert(x, y); break;
+            case 'S': show_output(); break;
         }
-    }
-    show_output();
+    }while(op!='S');
+    
     return 0;
 }
 
@@ -87,8 +90,8 @@ void check( int X, int Y )
 {
     bool is_connect = false;
     if( X <= Computers[0] && Y <= Computers[0] ){
-        while( Computers[X]>0 ) X = Computers[X];
-        while( Computers[Y]>0 ) Y = Computers[Y];
+        X = find_root(X);
+        Y = find_root(Y);
         is_connect = (X!=Y)?false:true;
     }
 
@@ -97,13 +100,21 @@ void check( int X, int Y )
     return ;
 }
 
+int find_root( int X )
+{
+    if( Computers[X] < 0 )
+        return X;
+    else 
+        return Computers[X] = find_root(Computers[X]); // 路径压缩
+}
+
 void insert( int X, int Y )
 {
     if( X > Computers[0] || Y > Computers[0] )
         return;
 
-    while( Computers[X]>0 ) X = Computers[X];
-    while( Computers[Y]>0 ) Y = Computers[Y];
+    X = find_root(X);
+    Y = find_root(Y);
 
     if( Computers[X] > Computers[Y] ){
         Computers[Y] += Computers[X];
