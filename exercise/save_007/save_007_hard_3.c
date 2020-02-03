@@ -6,8 +6,16 @@
 
 #define MAX_NODES   100
 #define SIDE_LEN    100
-#define CENTER_DIA  15
+#define CENTER_DIA  0
 #define Null        -1
+
+/*
+4 29
+20 0
+30 0
+20 -10
+10 10
+*/
 
 typedef double PointType;
 typedef struct
