@@ -11,7 +11,7 @@ struct QNode {
 };
 typedef struct QNode *Queue;
  
-Queue CreateQueue( int MaxSize )
+Queue CreateQueue( int MaxSize ) // 注意，MaxSize-1 为可存放元素个数！！
 {
     Queue Q = (Queue)malloc(sizeof(struct QNode));
     Q->Data = (ElementType *)malloc(MaxSize * sizeof(ElementType));
